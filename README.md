@@ -1,7 +1,30 @@
+# AI Reliability Judge
+AI Reliability Judge is a platform that stress‑tests AI agents from any GitHub repo, scores how much you can trust them, and lets AI open fix PRs automatically. It combines Cline, Kestra, Oumi, Together AI, Vercel, and CodeRabbit into one end‑to‑end reliability pipeline.
+
+## How it works
+1. Paste a public GitHub repo URL into the web UI.
+2. The system runs an evaluation workflow against the agent and collects metrics and logs.
+3. A reliability score (0–100) is produced along with a human‑readable summary.
+4. An autonomous coding agent prepares fix PRs, which are reviewed to keep the repository clean and production‑ready.
+
+## Try it in 10 seconds
+1. Open the live demo: https://ai-reliability-judge.vercel.app  
+2. Paste a public GitHub repo URL into the input box.  
+3. Click **Run reliability evaluation**.  
+4. You’ll see an evaluation status and a mock reliability score while the full agent pipeline runs in the background.
+
+## Tech & sponsor tools
+- **Vercel** – Hosts the production Next.js dashboard for a fast, smooth UX.
+- **Cline** – Autonomous coding agent used to plan and generate fix PRs.
+- **Kestra** – Orchestration layer for multi‑step evaluation workflows.
+- **Oumi** – Reliability scoring and evaluation logic for LLM/VLM agents.
+- **Together AI** – Model provider for running realistic agent tasks.
+- **CodeRabbit** – Code review bot that keeps PRs clean and open‑source friendly.
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
-
 First, run the development server:
 
 ```bash
