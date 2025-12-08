@@ -1,0 +1,40 @@
+import Image from "next/image";
+
+export default function Home() {
+  return (
+    <main className="min-h-screen flex flex-col items-center justify-center px-4">
+      <h1 className="text-3xl md:text-5xl font-bold text-center mb-4">
+        Can you really trust your AI agents?
+      </h1>
+      <p className="text-center text-gray-400 max-w-2xl mb-8">
+        Paste a GitHub repo, run realistic tasks, get a reliability score, and let AI open fix PRs for you.
+      </p>
+
+      <div className="w-full max-w-xl space-y-4">
+        <label className="block text-sm font-medium">
+          Step 1 — Enter your AI agent repo
+        </label>
+        <input
+          type="text"
+          placeholder="https://github.com/owner/repo"
+          className="w-full border border-gray-700 bg-black rounded-md px-3 py-2 text-sm"
+        />
+        <button className="w-full bg-white text-black py-2 rounded-md font-semibold">
+          Run reliability evaluation
+        </button>
+      </div>
+
+      <div className="mt-8 max-w-xl text-sm text-gray-500">
+        <p className="font-semibold mb-1">
+          What happens when you click &quot;Run&quot;?
+        </p>
+        <ul className="list-disc list-inside space-y-1">
+          <li>Kestra orchestrates an evaluation flow with Together AI models.</li>
+          <li>Oumi computes a 0–100 trust score from metrics and logs.</li>
+          <li>Cline prepares a fix and opens a GitHub pull request, reviewed by CodeRabbit.</li>
+          <li>You get a clean dashboard showing results and links.</li>
+        </ul>
+      </div>
+    </main>
+  );
+}

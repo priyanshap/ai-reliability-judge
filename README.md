@@ -1,34 +1,36 @@
-# AI Reliability Judge
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-AI Reliability Judge is a platform that stress-tests AI agents with realistic tasks, scores how much you can trust them, and then opens AI-generated fix PRs automatically. It combines Cline, Kestra, Oumi, Together AI, Vercel, and CodeRabbit into one end-to-end reliability pipeline. 
+## Getting Started
 
-### Why we built this
+First, run the development server:
 
-AI agents are becoming the default way to build products, but most teams still test them manually with ad-hoc prompts. That makes reliability, safety, latency, and cost very hard to measure or improve. We wanted a globally accessible judge that can:
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-- Run repeatable task suites against any AI-agent GitHub repo  
-- Summarize failures and metrics into a single “trust score”  
-- Use autonomous coding agents to propose code fixes via pull requests  
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### What it does
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-1. You paste a GitHub repo URL in the web UI and choose an evaluation suite.  
-2. Kestra orchestrates a workflow that runs the agent on real tasks using Together AI models and collects logs/metrics.  
-3. Oumi turns those metrics into a 0–100 trust score with explanations.  
-4. Cline uses the failure summary to generate code changes and opens a PR, which is then reviewed by CodeRabbit.  
-5. The Vercel dashboard shows you the score, failure cases, and links to the fix PRs.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-**Live demo:** _link coming soon_  
-**Demo video:** _link coming soon_
+## Learn More
 
-### How this aligns with AI Agents Assemble
+To learn more about Next.js, take a look at the following resources:
 
-- **Potential Impact:** Any team in the world can quickly understand if their AI agents are reliable, safe, and cost-efficient by running our judge on their GitHub repo.  
-- **Creativity & Originality:** We use agents to evaluate agents – orchestration with Kestra, autonomous coding with Cline, model evaluation with Oumi, and OSS-quality workflows with CodeRabbit.  
-- **Technical Implementation:** Each sponsor stone is a first-class part of the pipeline: Cline (coding agent), Kestra (data and workflow engine), Oumi (reliability scoring), Together AI (task execution), Vercel (deployment), CodeRabbit (reviews).  
-- **Aesthetics & UX:** A simple Vercel dashboard that hides complexity and gives a single trust score plus clear next steps.  
-- **Presentation & Communication:** Clear architecture, public repo, and a short demo video showing an end-to-end run.
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-We are targeting: **Infinity Build Award, Wakanda Data Award, Iron Intelligence Award, Stormbreaker Deployment Award, and Captain Code Award.**
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Deploy on Vercel
 
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
