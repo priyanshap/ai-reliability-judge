@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { basicMockEvaluation } from "@/lib/evaluator";
 
 export async function POST(req: NextRequest) {
   const { repoUrl } = await req.json();
@@ -10,10 +11,13 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const result = basicMockEvaluation(repoUrl);
+
   return NextResponse.json({
     ok: true,
-    status: "queued",
-    score: 82,
-    message: "Evaluation queued. This is a mock response for the prototype."
+    status: result.status,
+    score: result.score,
+    message: result.message,
   });
 }
+
