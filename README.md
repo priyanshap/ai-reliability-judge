@@ -20,19 +20,12 @@ AI Reliability Judge is a platform that stress‑tests AI agents from any GitHub
 - **Oumi** – Reliability scoring and evaluation logic for LLM/VLM agents.
 - **Together AI** – Model provider for running realistic agent tasks.
 - **CodeRabbit** – Code review bot that keeps PRs clean and open‑source friendly.
-<<<<<<< HEAD
-
+  
 ## Engineering workflow (Captain Code)
 - All changes go through GitHub pull requests reviewed by **CodeRabbit**.
 - PR #1 (evaluator module) was reviewed by CodeRabbit with no blocking issues, keeping `main` production-ready.
 - The evaluation pipeline lives in `lib/evaluator.ts`, making it easy for AI agents like Cline to extend.
-=======
-  
-## Engineering workflow (Captain Code)
-- All changes go through GitHub pull requests reviewed by **CodeRabbit**.
-- The evaluation pipeline lives in `lib/evaluator.ts`, making it easy for AI agents like Cline to extend.
-- Main branch stays clean and production-ready for the Vercel deployment.
->>>>>>> e7b304cbaee115e16fce004859ff8655b6e66132
+
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
