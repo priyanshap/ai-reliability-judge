@@ -1,6 +1,42 @@
+"use client";
+
+import { useState } from "react";
+
 import Image from "next/image";
 
 export default function Home() {
+  const [repoUrl, setRepoUrl] = useState("");
+const [status, setStatus] = useState<string | null>(null);
+
+async function handleRun() {
+  if (!repoUrl || !repoUrl.startsWith("https://github.com/")) {
+    setStatus("Please paste a valid public GitHub repository URL.");
+    return;
+  }
+  setStatus("Running evaluation...");
+
+  try {
+    const res = await fetch("/api/run", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ repoUrl }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok || !data.ok) {
+      setStatus(data.message || "Something went wrong. Please try again.");
+      return;
+    }
+
+    setStatus(
+      `Evaluation queued. Mock reliability score: ${data.score}/100 (demo).`
+    );
+  } catch (err) {
+    setStatus("Network error. Please try again.");
+  }
+}
+
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-4">
       <h1 className="text-3xl md:text-5xl font-bold text-center mb-4">
@@ -16,10 +52,19 @@ export default function Home() {
         </label>
         <input
           type="text"
+          value={repoUrl}
+          onChange={(e) => setRepoUrl(e.target.value)}
           placeholder="https://github.com/owner/repo"
           className="w-full border border-gray-700 bg-black rounded-md px-3 py-2 text-sm"
         />
-        <button className="w-full bg-white text-black py-2 rounded-md font-semibold">
+        <button 
+        onClick={handleRun}
+        className={`w-full py-2 rounded-md font-semibold transition
+          ${repoUrl
+            ? "bg-white text-black hover:bg-transparent hover:text-white hover:border hover:border-white hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] active:scale-95 cursor-pointer"
+            : "bg-gray-700 text-gray-400 cursor-not-allowed"
+          }`}
+        >
           Run reliability evaluation
         </button>
       </div>
@@ -35,6 +80,10 @@ export default function Home() {
           <li>You get a clean dashboard showing results and links.</li>
         </ul>
       </div>
+      {status && (
+        <p className="mt-6 text-sm text-green-400 text-center">{status}</p>
+)}
+
     </main>
   );
 }
