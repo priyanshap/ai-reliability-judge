@@ -94,6 +94,10 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 
+## UI preview
+![AI Reliability Judge UI](screenshots/main-ui.png)
+
+
 ## Future work
 - Use `parseRepoUrl` in the UI to show a friendly “Detected repo: owner/name” summary under the input field.
 - Extend the evaluator to include a `githubMetricScore` field based on real GitHub repository metrics (stars, issues, CI status) instead of the current scaffold.
