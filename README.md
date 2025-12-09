@@ -1,6 +1,8 @@
 # AI Reliability Judge
 AI Reliability Judge is a platform that stress‑tests AI agents from any GitHub repo, scores how much you can trust them, and lets AI open fix PRs automatically. It combines Cline, Kestra, Oumi, Together AI, Vercel, and CodeRabbit into one end‑to‑end reliability pipeline.
 
+AI Reliability Judge is for founders, PMs, and engineers who need to prove their AI agents will not break in production.
+
 ## How it works
 1. Paste a public GitHub repo URL into the web UI.
 2. The system runs an evaluation workflow against the agent and collects metrics and logs.

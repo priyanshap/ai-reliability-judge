@@ -42,6 +42,9 @@ async function handleRun() {
       <h1 className="text-3xl md:text-5xl font-bold text-center mb-4">
         Can you really trust your AI agents?
       </h1>
+      <p className="text-center text-gray-300 max-w-2xl mb-2">
+        For founders, PMs, and engineers who need to prove their AI agents won&apos;t break in production.
+       </p>
       <p className="text-center text-gray-400 max-w-2xl mb-8">
         Paste a GitHub repo, run realistic tasks, get a reliability score, and let AI open fix PRs for you.
       </p>
