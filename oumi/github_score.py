@@ -15,7 +15,11 @@ def fetch_repo_metrics(owner: str, name: str):
     if resp.status_code != 200:
         return None
 
-    data = resp.json()
+    try:
++       data = resp.json()
++    except (ValueError, requests.JSONDecodeError):
++        return None
++    
     stars = data.get("stargazers_count", 0)
     issues = data.get("open_issues_count", 0)
     return {"stars": stars, "open_issues": issues}
@@ -41,7 +45,7 @@ def score_repo(metrics):
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-          print(f"Usage: python {sys.argv[0]} <owner> <repo>")
+        print(f"Usage: python {sys.argv[0]} <owner> <repo>")
         sys.exit(1)
 
     owner, name = sys.argv[1], sys.argv[2]
