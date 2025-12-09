@@ -17,8 +17,8 @@ def fetch_repo_metrics(owner: str, name: str):
 
     try:
 +       data = resp.json()
-+    except (ValueError, requests.JSONDecodeError):
-+        return None
++   except ValueError:
++       return None
 +    
     stars = data.get("stargazers_count", 0)
     issues = data.get("open_issues_count", 0)
