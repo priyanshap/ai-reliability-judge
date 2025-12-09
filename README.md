@@ -34,9 +34,9 @@ AI Reliability Judge is built and maintained using an AI‑first engineering pro
   - Keeps `main` production‑ready while still moving fast with AI‑generated changes.
 
 - **Captain Code**
-- All changes go through GitHub pull requests reviewed by **CodeRabbit**.
-- PR #1 (evaluator module) was reviewed by CodeRabbit with no blocking issues, keeping `main` production-ready.
-- The evaluation pipeline lives in `lib/evaluator.ts`, making it easy for AI agents like Cline to extend.
+  - All changes go through GitHub pull requests reviewed by **CodeRabbit**.
+  - PR #1 (evaluator module) was reviewed by CodeRabbit with no blocking issues, keeping `main` production-ready.
+  - The evaluation pipeline lives in `lib/evaluator.ts`, making it easy for AI agents like Cline to extend.
 
 - **Vercel (deploy from main)**  
   - Connected to this GitHub repository; every merge to `main` triggers a fresh deployment.  
@@ -45,9 +45,9 @@ AI Reliability Judge is built and maintained using an AI‑first engineering pro
 - **Iron Intelligence – Oumi reliability brain**
 To explore an “Oumi-style” reliability brain, AI Reliability Judge includes a small metrics-based scoring script:
 
-- The `oumi/github_score.py` script calls the public GitHub REST API for a given `<owner> <repo>` pair and reads basic repository metrics such as stars and open issues. [web:126][web:132]
-- It converts these metrics into a rough 0–100 reliability score plus a Low / Medium / High risk label by rewarding popular repos (more stars) and penalizing repos with many unresolved issues.
-- For the demo, this script is run manually on a few example repositories (for example, `python oumi/github_score.py vercel next.js`), and the resulting Oumi-style scores are compared with the judgments produced by the in-app evaluator.
+  - The `oumi/github_score.py` script calls the public GitHub REST API for a given `<owner> <repo>` pair and reads basic repository metrics such as stars and open     issues. [web:126][web:132]
+  - It converts these metrics into a rough 0–100 reliability score plus a Low / Medium / High risk label by rewarding popular repos (more stars) and penalizing        repos with many unresolved issues.
+  - For the demo, this script is run manually on a few example repositories (for example, `python oumi/github_score.py vercel next.js`), and the resulting Oumi-       style scores are compared with the judgments produced by the in-app evaluator.
 
 This `oumi/` module acts as a prototype “Oumi reliability brain” that can later be plugged directly into the `/api/run` evaluator pipeline for fully integrated scoring.
 
