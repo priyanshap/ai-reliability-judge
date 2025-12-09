@@ -51,7 +51,7 @@ async function handleRun() {
 
       <div className="w-full max-w-xl space-y-4">
         <label className="block text-sm font-medium">
-          Step 1 — Enter your AI agent repo
+          Enter your AI agent repo
         </label>
         <input
           type="text"
@@ -70,9 +70,7 @@ async function handleRun() {
         >
           Run reliability evaluation
         </button>
-        <p className="text-xs text-gray-400 mt-2">
-          Step 2 — Watch for the reliability score, PR link, and dashboard that appear below once the run finishes.
-        </p>
+        
       </div>
 
       <div className="mt-8 max-w-xl text-sm text-gray-500">
