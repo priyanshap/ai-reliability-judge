@@ -3,13 +3,23 @@ import requests
 
 def fetch_repo_metrics(owner: str, name: str):
     url = f"https://api.github.com/repos/{owner}/{name}"
-    resp = requests.get(url, headers={"Accept": "application/vnd.github+json"})
+    try:
+        resp = requests.get(
+            url,
+            headers={"Accept": "application/vnd.github+json"},
+            timeout=10,
+        )
+    except requests.RequestException:
+        return None
+
     if resp.status_code != 200:
         return None
+
     data = resp.json()
     stars = data.get("stargazers_count", 0)
     issues = data.get("open_issues_count", 0)
     return {"stars": stars, "open_issues": issues}
+
 
 def score_repo(metrics):
     stars = metrics["stars"]
@@ -31,7 +41,7 @@ def score_repo(metrics):
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print("Usage: python github_score.py <owner> <repo>")
+          print(f"Usage: python {sys.argv[0]} <owner> <repo>")
         sys.exit(1)
 
     owner, name = sys.argv[1], sys.argv[2]
