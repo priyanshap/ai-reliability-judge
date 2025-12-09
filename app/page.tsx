@@ -70,6 +70,9 @@ async function handleRun() {
         >
           Run reliability evaluation
         </button>
+        <p className="text-xs text-gray-400 mt-2">
+          Step 2 — Watch for the reliability score, PR link, and dashboard that appear below once the run finishes.
+        </p>
       </div>
 
       <div className="mt-8 max-w-xl text-sm text-gray-500">
