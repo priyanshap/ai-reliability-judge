@@ -2,40 +2,95 @@
 
 import { useState } from "react";
 
-import Image from "next/image";
+function isValidRepoUrl(url: string) {
+  try {
+    const u = new URL(url);
+    if (u.hostname !== "github.com") return false;
+
+    const parts = u.pathname.split("/").filter(Boolean);
+    if (parts.length < 2) return false; // need /owner/repo
+
+    const [owner, repo] = parts;
+    if (!owner || !repo) return false;
+
+    // Reject direct file/blob/tree/PR/issues URLs
+    if (
+      parts[2] === "blob" ||
+      parts[2] === "tree" ||
+      parts[2] === "pull" ||
+      parts[2] === "issues"
+    ) {
+      return false;
+    }
+
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 export default function Home() {
   const [repoUrl, setRepoUrl] = useState("");
-const [status, setStatus] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [status, setStatus] = useState<string | null>(null);
+  type RunResult = {
+  score: number;
+  status: string;
+  message?: string;
+  isAgentRepo?: boolean;
+  tests?: {
+    id: string;
+    name: string;
+    dimension: string;
+    status: "pass" | "fail" | "not_run";
+    impact: "low" | "medium" | "high";
+  }[];
+  prUrl?: string;
+};
 
-async function handleRun() {
-  if (!repoUrl || !repoUrl.startsWith("https://github.com/")) {
-    setStatus("Please paste a valid public GitHub repository URL.");
-    return;
-  }
-  setStatus("Running evaluation...");
+const [result, setResult] = useState<RunResult | null>(null);
 
-  try {
-    const res = await fetch("/api/run", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ repoUrl }),
-    });
 
-    const data = await res.json();
-
-    if (!res.ok || !data.ok) {
-      setStatus(data.message || "Something went wrong. Please try again.");
+  async function handleRun() {
+    if (!isValidRepoUrl(repoUrl)) {
+      setError(
+        "Please paste a GitHub repo URL like https://github.com/owner/repo, not a profile, file, or PR link. Make sure it is a public repository."
+      );
+      setStatus(null);
+      setResult(null);
       return;
     }
 
-    setStatus(
-      `Evaluation queued. Mock reliability score: ${data.score}/100 (demo).`
-    );
-  } catch (err) {
-    setStatus("Network error. Please try again.");
+    setLoading(true);
+    setError(null);
+    setResult(null);
+    setStatus("Running evaluation...");
+
+    try {
+      const res = await fetch("/api/run", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ repoUrl }),
+      });
+
+      if (!res.ok) {
+        throw new Error(
+          "Could not run evaluation. Check that this is a public GitHub repo and try again."
+        );
+      }
+
+      const data = await res.json();
+      console.log("run result", data);
+      setResult(data);
+      setStatus("Done.");
+    } catch (e: any) {
+      setError(e.message || "Something went wrong. Please try again.");
+      setStatus(null);
+    } finally {
+      setLoading(false);
+    }
   }
-}
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-4">
@@ -44,12 +99,12 @@ async function handleRun() {
       </h1>
       <p className="text-center text-gray-300 max-w-2xl mb-2">
         For founders, PMs, and engineers who need to prove their AI agents won&apos;t break in production.
-       </p>
+      </p>
       <p className="text-center text-gray-400 max-w-2xl mb-8">
         Paste a GitHub repo, run realistic tasks, get a reliability score, and let AI open fix PRs for you.
       </p>
 
-      <div className="w-full max-w-xl space-y-4">
+      <div className="w-full max-w-xl space-y-2">
         <label className="block text-sm font-medium">
           Enter your AI agent repo
         </label>
@@ -60,17 +115,22 @@ async function handleRun() {
           placeholder="https://github.com/owner/repo"
           className="w-full border border-gray-700 bg-black rounded-md px-3 py-2 text-sm"
         />
-        <button 
-        onClick={handleRun}
-        className={`w-full py-2 rounded-md font-semibold transition
-          ${repoUrl
-            ? "bg-white text-black hover:bg-transparent hover:text-white hover:border hover:border-white hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] active:scale-95 cursor-pointer"
-            : "bg-gray-700 text-gray-400 cursor-not-allowed"
+        <p className="text-xs text-gray-400">
+          Paste a <span className="font-semibold">public GitHub repo</span> that contains an AI agent
+          (TypeScript or Python) for the most accurate results.
+        </p>
+
+        <button
+          onClick={handleRun}
+          disabled={loading || !repoUrl}
+          className={`w-full mt-2 py-2 rounded-md font-semibold transition ${
+            repoUrl
+              ? "bg-white text-black hover:bg-transparent hover:text-white hover:border hover:border-white hover:shadow-lg"
+              : "bg-gray-700 text-gray-400 cursor-not-allowed"
           }`}
         >
-          Run reliability evaluation
+          {loading ? "Running evaluation..." : "Run reliability evaluation"}
         </button>
-        
       </div>
 
       <div className="mt-8 max-w-xl text-sm text-gray-500">
@@ -78,16 +138,110 @@ async function handleRun() {
           What happens when you click &quot;Run&quot;?
         </p>
         <ul className="list-disc list-inside space-y-1">
-          <li>Kestra orchestrates an evaluation flow with Together AI models.</li>
-          <li>Oumi computes a 0–100 trust score from metrics and logs.</li>
-          <li>Cline prepares a fix and opens a GitHub pull request, reviewed by CodeRabbit.</li>
-          <li>You get a clean dashboard showing results and links.</li>
+          <li>An evaluation flow runs realistic tasks against your agent.</li>
+          <li>A 0–100 trust score is computed from logs and metrics.</li>
+          <li>A fix is prepared and opened as a GitHub pull request for review.</li>
+          <li>You get a clean summary here plus links back to your repo.</li>
         </ul>
       </div>
-      {status && (
-        <p className="mt-6 text-sm text-green-400 text-center">{status}</p>
+
+      {error && (
+        <p className="mt-4 text-sm text-red-400 text-center">
+          {error}
+        </p>
+      )}
+
+      {status && !error && (
+        <p className="mt-6 text-sm text-green-400 text-center">
+          {status}
+        </p>
+      )}
+
+      {result && !error && result.score !== undefined && (
+        <>
+          <p className="mt-6 text-3xl md:text-4xl font-bold text-center text-white">
+            {result.score}/100 reliability score for this agent.
+          </p>
+
+          {/* Non‑blocking warning if backend says this doesn&apos;t look like an AI agent repo */}
+          {result.isAgentRepo === false && (
+            <p className="mt-2 text-xs text-yellow-400 text-center">
+              This repo doesn&apos;t look like an AI agent project. Reliability results may be less meaningful.
+            </p>
+          )}
+
+          {result.prUrl && (
+            <p className="mt-2 text-sm text-blue-400 text-center underline">
+              <a href={result.prUrl} target="_blank" rel="noreferrer">
+                View the suggested fix PR on GitHub
+              </a>
+            </p>
+          )}
+          {result.tests && result.tests.length > 0 && (
+  <div className="mt-6 w-full max-w-3xl">
+    <h2 className="text-lg font-semibold text-center mb-2">
+      Reliability breakdown
+    </h2>
+    <div className="overflow-x-auto rounded-lg border border-gray-800 bg-black/40">
+      <table className="min-w-full text-xs md:text-sm">
+        <thead className="bg-gray-900/70">
+          <tr>
+            <th className="px-3 py-2 text-left font-medium text-gray-300">
+              Test
+            </th>
+            <th className="px-3 py-2 text-left font-medium text-gray-300">
+              Dimension
+            </th>
+            <th className="px-3 py-2 text-left font-medium text-gray-300">
+              Impact
+            </th>
+            <th className="px-3 py-2 text-left font-medium text-gray-300">
+              Status
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {result.tests.map((t) => (
+            <tr key={t.id} className="border-t border-gray-800">
+              <td className="px-3 py-2 text-gray-100">{t.name}</td>
+              <td className="px-3 py-2 text-gray-400">{t.dimension}</td>
+              <td className="px-3 py-2">
+                <span
+                  className={
+                    t.impact === "high"
+                      ? "text-red-400"
+                      : t.impact === "medium"
+                      ? "text-yellow-300"
+                      : "text-green-300"
+                  }
+                >
+                  {t.impact.toUpperCase()}
+                </span>
+              </td>
+              <td className="px-3 py-2">
+                <span
+                  className={
+                    t.status === "pass"
+                      ? "text-green-400"
+                      : t.status === "fail"
+                      ? "text-red-400"
+                      : "text-gray-400"
+                  }
+                >
+                  {t.status.toUpperCase()}
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
 )}
 
+        </>
+      )}
     </main>
   );
 }
+
