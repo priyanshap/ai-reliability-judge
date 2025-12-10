@@ -10,37 +10,33 @@ AI Reliability Judge is a reliability and auto-fix layer for AI agents: paste a 
 ## Who it is for
 Founders, PMs, and engineers who need to prove their AI agents will not break in production.
 
-
-## Getting started
-
-### 1. Prerequisites
+## Prerequisites
 - Node.js and npm installed.
 - A GitHub personal access token with `repo` scope.
 
-### 2. Clone and install
+## Getting started
+1. Clone and install:
 git clone https://github.com/priyanshap/ai-reliability-judge.git
 cd ai-reliability-judge
 npm install
 
-### 3. Configure GitHub access
-Create a `.env.local` file in the project root:
+2. Add environment variables in `.env.local`:
 GITHUB_TOKEN=ghp_your_personal_access_token_here
 GITHUB_OWNER=your-github-username
 GITHUB_REPO=ai-reliability-judge
 
-### 4. Run locally
+3. Run the app:
 npm run dev
-Then open `http://localhost:3000` in your browser.
-
+Open `http://localhost:3000` in your browser.
 
 ## How to use
-1. Paste a **public GitHub repo** URL in the form `https://github.com/owner/repo`.
-2. Click **Run reliability evaluation**.
-3. Wait for the evaluation to complete.
-4. See:
-   - A 0–100 reliability score.
-   - A breakdown of tests grouped by reliability dimension.
-   - A link to a suggested fix PR on GitHub.
+1. Keep or paste a public GitHub repo URL (recommended demo: `https://github.com/langchain-ai/langgraph-example`). [web:474]  
+2. Click **Run reliability evaluation**.  
+3. Read:
+   - Big 0–100 reliability score.
+   - Reliability breakdown table grouped by five dimensions.
+   - GitHub PR link with suggested fixes.
+4. Check the **Recent runs** panel to see past scores and PR URLs.
    
 If the repo does not look like an AI agent project, the app shows a warning and the score may be less meaningful.
 
