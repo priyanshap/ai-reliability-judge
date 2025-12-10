@@ -31,14 +31,26 @@ export async function POST(req: NextRequest) {
     }
 
     const evalResult = await basicMockEvaluation(repoUrl);
-    const prUrl = await createFixPr(repoUrl);
+
+    let prUrl: string | null = null;
+    try {
+      prUrl = await createFixPr(repoUrl);
+    } catch (error: any) {
+      console.error(
+        "API /api/run GitHub error:",
+        error.status,
+        error.message,
+        error.response?.data
+      );
+      // still continue without PR so we see scoring working
+    }
 
     addRun({
       id,
       repoUrl,
       status: "success",
       score: evalResult.score,
-      prUrl,
+      prUrl: prUrl || undefined,
       createdAt: now,
     });
 
@@ -52,6 +64,7 @@ export async function POST(req: NextRequest) {
       prUrl,
     });
   } catch (err: any) {
+    console.error("API /api/run top-level error:", err?.message, err);
     const errorMessage =
       err?.message || "Unexpected error while running reliability evaluation.";
 
