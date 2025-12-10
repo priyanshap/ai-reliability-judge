@@ -158,6 +158,11 @@ export default function Home() {
               that contains an AI agent (TypeScript or Python) for the most
               accurate results.
             </p>
+            <p className="text-xs text-gray-500">
+              Pull requests are always opened against a configurable target repo
+              set via <span className="font-mono">GITHUB_OWNER</span> and
+              <span className="font-mono"> GITHUB_REPO</span>.
+            </p>
 
             <button
               onClick={handleRun}
