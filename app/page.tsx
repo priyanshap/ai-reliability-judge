@@ -151,7 +151,8 @@ export default function Home() {
               type="text"
               value={repoUrl}
               onChange={(e) => setRepoUrl(e.target.value)}
-              placeholder="https://github.com/owner/repo"
+              placeholder="https://github.com/your-user/your-agent-repo"
+
               className="w-full border border-gray-700 bg-black rounded-md px-3 py-2 text-sm"
             />
             <p className="text-xs text-gray-400">
