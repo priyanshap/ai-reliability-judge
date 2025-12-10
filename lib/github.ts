@@ -1,5 +1,6 @@
 import { Octokit } from "@octokit/core";
 
+// Use the default GitHub REST base URL (https://api.github.com)
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 });
@@ -29,13 +30,23 @@ export async function createFixPr(repoUrl: string) {
 
   const latestSha = ref.data.object.sha;
 
-  // 3. Create new branch from that commit
-  await octokit.request("POST /repos/{owner}/{repo}/git/refs", {
-    owner,
-    repo,
-    ref: `refs/heads/${branchName}`,
-    sha: latestSha,
-  });
+  // 3. Create new branch from that commit (with logging)
+  try {
+    await octokit.request("POST /repos/{owner}/{repo}/git/refs", {
+      owner,
+      repo,
+      ref: `refs/heads/${branchName}`,
+      sha: latestSha,
+    });
+  } catch (error: any) {
+    console.error(
+      "GitHub create ref error:",
+      error.status,
+      error.message,
+      error.response?.data
+    );
+    throw error;
+  }
 
   // 4. Create or update a simple file in that branch
   const filePath = "ai-reliability-fix.txt";

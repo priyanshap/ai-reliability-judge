@@ -1,24 +1,25 @@
-type RunStatus = "success" | "error";
+// lib/runLog.ts
+
+export type RunStatus = "success" | "error";
 
 export type RunLogEntry = {
   id: string;
   repoUrl: string;
   status: RunStatus;
   score?: number;
-  prUrl?: string | null;
+  prUrl?: string;
   errorMessage?: string;
   createdAt: string;
 };
 
-const runLog: RunLogEntry[] = [];
+let runs: RunLogEntry[] = [];
 
-export function addRun(entry: RunLogEntry) {
-  runLog.unshift(entry);
-  if (runLog.length > 20) {
-    runLog.pop();
-  }
+export function addRun(run: RunLogEntry) {
+  runs.unshift(run);
+  runs = runs.slice(0, 20); // keep latest N
 }
 
-export function getRuns(): RunLogEntry[] {
-  return runLog;
+export function listRuns(): RunLogEntry[] {
+  return runs;
 }
+
