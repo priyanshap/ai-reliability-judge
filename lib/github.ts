@@ -1,6 +1,6 @@
+// lib/github.ts
 import { Octokit } from "@octokit/core";
 
-// Use the default GitHub REST base URL (https://api.github.com)
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 });
@@ -8,15 +8,27 @@ const octokit = new Octokit({
 const owner = process.env.GITHUB_OWNER!;
 const repo = process.env.GITHUB_REPO!;
 
+if (!owner || !repo || !process.env.GITHUB_TOKEN) {
+  console.warn(
+    "[GitHub] Missing GITHUB_OWNER, GITHUB_REPO, or GITHUB_TOKEN env vars. " +
+      "PR creation will fail until these are configured."
+  );
+}
+
 export async function createFixPr(repoUrl: string) {
+  console.log("[GitHub] Creating fix PR", { owner, repo, repoUrl });
+
   // 1. Get default branch + latest commit
   const repoInfo = await octokit.request("GET /repos/{owner}/{repo}", {
     owner,
     repo,
   });
-
   const baseBranch = repoInfo.data.default_branch;
-  const branchName = `ai-reliability-fix-${Date.now()}`;
+  console.log("[GitHub] Default branch:", baseBranch);
+
+  // Generate a short, mostly unique branch suffix
+  const safeSuffix = Date.now().toString(36);
+  const branchName = `ai-reliability-fix-${safeSuffix}`;
 
   // 2. Get latest commit SHA on default branch
   const ref = await octokit.request(
@@ -27,8 +39,8 @@ export async function createFixPr(repoUrl: string) {
       ref: `heads/${baseBranch}`,
     }
   );
-
-  const latestSha = ref.data.object.sha;
+  const latestSha = (ref.data as any).object.sha as string;
+  console.log("[GitHub] Latest commit SHA:", latestSha);
 
   // 3. Create new branch from that commit (with logging)
   try {
@@ -38,21 +50,21 @@ export async function createFixPr(repoUrl: string) {
       ref: `refs/heads/${branchName}`,
       sha: latestSha,
     });
+    console.log("[GitHub] Created branch", branchName);
   } catch (error: any) {
     console.error(
-      "GitHub create ref error:",
-      error.status,
-      error.message,
-      error.response?.data
+      "[GitHub] create ref error:",
+      error?.status,
+      error?.message,
+      error?.response?.data
     );
     throw error;
   }
 
   // 4. Create or update a simple file in that branch
   const filePath = "ai-reliability-fix.txt";
-  const content = Buffer.from(
-    `Automated reliability fix suggestion for ${repoUrl} at ${new Date().toISOString()}\n`
-  ).toString("base64");
+  const bodyText = `Automated reliability fix suggestion for ${repoUrl} at ${new Date().toISOString()}\n`;
+  const content = Buffer.from(bodyText).toString("base64");
 
   // Try to fetch existing file to decide between create / update
   let existingSha: string | undefined;
@@ -66,10 +78,12 @@ export async function createFixPr(repoUrl: string) {
         ref: branchName,
       }
     );
-    // @ts-expect-error - type narrowing simplified
+    // @ts-expect-error GitHub types are broad here
     existingSha = existing.data.sha;
+    console.log("[GitHub] Updating existing file on branch", branchName);
   } catch {
     existingSha = undefined;
+    console.log("[GitHub] Creating new file on branch", branchName);
   }
 
   await octokit.request("PUT /repos/{owner}/{repo}/contents/{path}", {
@@ -83,14 +97,24 @@ export async function createFixPr(repoUrl: string) {
   });
 
   // 5. Create PR
+  const prBodyLines = [
+    `This PR was opened automatically as a demo fix for ${repoUrl}.`,
+    "",
+    "What this PR demonstrates:",
+    "- The AI Reliability Judge evaluated your agent repository.",
+    "- It created a branch and committed a small marker file.",
+    "- It opened this pull request so you can review and iterate.",
+  ];
+
   const pr = await octokit.request("POST /repos/{owner}/{repo}/pulls", {
     owner,
     repo,
     title: "AI Reliability Judge – automated fix suggestion",
     head: branchName,
     base: baseBranch,
-    body: `This PR was opened automatically as a demo fix for ${repoUrl}.`,
+    body: prBodyLines.join("\n"),
   });
 
+  console.log("[GitHub] Created PR:", pr.data.html_url);
   return pr.data.html_url;
 }
