@@ -30,19 +30,21 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // 1) Run your scoring logic against the provided URL
     const evalResult = await basicMockEvaluation(repoUrl);
 
+    // 2) Always open the PR against the configured GITHUB_OWNER / GITHUB_REPO
     let prUrl: string | null = null;
     try {
       prUrl = await createFixPr(repoUrl);
     } catch (error: any) {
       console.error(
         "API /api/run GitHub error:",
-        error.status,
-        error.message,
-        error.response?.data
+        error?.status,
+        error?.message,
+        error?.response?.data
       );
-      // still continue without PR so we see scoring working
+      // continue without PR so score still shows
     }
 
     addRun({

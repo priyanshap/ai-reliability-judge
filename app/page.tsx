@@ -48,7 +48,7 @@ type RunHistoryItem = {
   repoUrl: string;
   status: "success" | "error";
   score?: number;
-  prUrl?: string | null;
+  prUrl?: string;
   errorMessage?: string;
   createdAt: string;
 };
@@ -309,7 +309,10 @@ export default function Home() {
 
           <ul className="space-y-3">
             {runHistory.map((run) => (
-              <li key={run.id} className="border border-gray-800 rounded-lg p-2">
+              <li
+                key={run.id}
+                className="border border-gray-800 rounded-lg p-2"
+              >
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-[11px] text-gray-400">
                     {new Date(run.createdAt).toLocaleTimeString()}
@@ -357,5 +360,3 @@ export default function Home() {
     </main>
   );
 }
-
-

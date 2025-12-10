@@ -16,10 +16,9 @@ let runs: RunLogEntry[] = [];
 
 export function addRun(run: RunLogEntry) {
   runs.unshift(run);
-  runs = runs.slice(0, 20); // keep latest N
+  runs = runs.slice(0, 20);
 }
 
 export function listRuns(): RunLogEntry[] {
   return runs;
 }
-
