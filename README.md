@@ -44,6 +44,14 @@ Then open `http://localhost:3000` in your browser.
    
 If the repo does not look like an AI agent project, the app shows a warning and the score may be less meaningful.
 
+### Recommended demo repo
+For demos and screenshots, we use the official LangGraph example repo:
+
+- https://github.com/langchain-ai/langgraph-example
+
+This is a real AI agent project, so the reliability score and test breakdown are meaningful.
+
+
 ## Reliability dimensions
 See `docs/reliability.md` for the detailed description of the five reliability dimensions and the tests mapped to each one.
 

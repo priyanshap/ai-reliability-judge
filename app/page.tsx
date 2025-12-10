@@ -29,12 +29,7 @@ function isValidRepoUrl(url: string) {
   }
 }
 
-export default function Home() {
-  const [repoUrl, setRepoUrl] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [status, setStatus] = useState<string | null>(null);
-  type RunResult = {
+type RunResult = {
   score: number;
   status: string;
   message?: string;
@@ -49,8 +44,14 @@ export default function Home() {
   prUrl?: string;
 };
 
-const [result, setResult] = useState<RunResult | null>(null);
-
+export default function Home() {
+  const [repoUrl, setRepoUrl] = useState(
+    "https://github.com/langchain-ai/langgraph-example"
+  );
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [status, setStatus] = useState<string | null>(null);
+  const [result, setResult] = useState<RunResult | null>(null);
 
   async function handleRun() {
     if (!isValidRepoUrl(repoUrl)) {
@@ -98,10 +99,12 @@ const [result, setResult] = useState<RunResult | null>(null);
         Can you really trust your AI agents?
       </h1>
       <p className="text-center text-gray-300 max-w-2xl mb-2">
-        For founders, PMs, and engineers who need to prove their AI agents won&apos;t break in production.
+        For founders, PMs, and engineers who need to prove their AI agents
+        won&apos;t break in production.
       </p>
       <p className="text-center text-gray-400 max-w-2xl mb-8">
-        Paste a GitHub repo, run realistic tasks, get a reliability score, and let AI open fix PRs for you.
+        Paste a GitHub repo, run realistic tasks, get a reliability score, and
+        let AI open fix PRs for you.
       </p>
 
       <div className="w-full max-w-xl space-y-2">
@@ -116,8 +119,9 @@ const [result, setResult] = useState<RunResult | null>(null);
           className="w-full border border-gray-700 bg-black rounded-md px-3 py-2 text-sm"
         />
         <p className="text-xs text-gray-400">
-          Paste a <span className="font-semibold">public GitHub repo</span> that contains an AI agent
-          (TypeScript or Python) for the most accurate results.
+          Paste a <span className="font-semibold">public GitHub repo</span> that
+          contains an AI agent (TypeScript or Python) for the most accurate
+          results.
         </p>
 
         <button
@@ -146,15 +150,11 @@ const [result, setResult] = useState<RunResult | null>(null);
       </div>
 
       {error && (
-        <p className="mt-4 text-sm text-red-400 text-center">
-          {error}
-        </p>
+        <p className="mt-4 text-sm text-red-400 text-center">{error}</p>
       )}
 
       {status && !error && (
-        <p className="mt-6 text-sm text-green-400 text-center">
-          {status}
-        </p>
+        <p className="mt-6 text-sm text-green-400 text-center">{status}</p>
       )}
 
       {result && !error && result.score !== undefined && (
@@ -163,10 +163,10 @@ const [result, setResult] = useState<RunResult | null>(null);
             {result.score}/100 reliability score for this agent.
           </p>
 
-          {/* Non‑blocking warning if backend says this doesn&apos;t look like an AI agent repo */}
           {result.isAgentRepo === false && (
             <p className="mt-2 text-xs text-yellow-400 text-center">
-              This repo doesn&apos;t look like an AI agent project. Reliability results may be less meaningful.
+              This repo doesn&apos;t look like an AI agent project. Reliability
+              results may be less meaningful.
             </p>
           )}
 
@@ -177,71 +177,74 @@ const [result, setResult] = useState<RunResult | null>(null);
               </a>
             </p>
           )}
-          {result.tests && result.tests.length > 0 && (
-  <div className="mt-6 w-full max-w-3xl">
-    <h2 className="text-lg font-semibold text-center mb-2">
-      Reliability breakdown
-    </h2>
-    <div className="overflow-x-auto rounded-lg border border-gray-800 bg-black/40">
-      <table className="min-w-full text-xs md:text-sm">
-        <thead className="bg-gray-900/70">
-          <tr>
-            <th className="px-3 py-2 text-left font-medium text-gray-300">
-              Test
-            </th>
-            <th className="px-3 py-2 text-left font-medium text-gray-300">
-              Dimension
-            </th>
-            <th className="px-3 py-2 text-left font-medium text-gray-300">
-              Impact
-            </th>
-            <th className="px-3 py-2 text-left font-medium text-gray-300">
-              Status
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {result.tests.map((t) => (
-            <tr key={t.id} className="border-t border-gray-800">
-              <td className="px-3 py-2 text-gray-100">{t.name}</td>
-              <td className="px-3 py-2 text-gray-400">{t.dimension}</td>
-              <td className="px-3 py-2">
-                <span
-                  className={
-                    t.impact === "high"
-                      ? "text-red-400"
-                      : t.impact === "medium"
-                      ? "text-yellow-300"
-                      : "text-green-300"
-                  }
-                >
-                  {t.impact.toUpperCase()}
-                </span>
-              </td>
-              <td className="px-3 py-2">
-                <span
-                  className={
-                    t.status === "pass"
-                      ? "text-green-400"
-                      : t.status === "fail"
-                      ? "text-red-400"
-                      : "text-gray-400"
-                  }
-                >
-                  {t.status.toUpperCase()}
-                </span>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </div>
-)}
 
+          {result.tests && result.tests.length > 0 && (
+            <div className="mt-6 w-full max-w-3xl">
+              <h2 className="text-lg font-semibold text-center mb-2">
+                Reliability breakdown
+              </h2>
+              <div className="overflow-x-auto rounded-lg border border-gray-800 bg-black/40">
+                <table className="min-w-full text-xs md:text-sm">
+                  <thead className="bg-gray-900/70">
+                    <tr>
+                      <th className="px-3 py-2 text-left font-medium text-gray-300">
+                        Test
+                      </th>
+                      <th className="px-3 py-2 text-left font-medium text-gray-300">
+                        Dimension
+                      </th>
+                      <th className="px-3 py-2 text-left font-medium text-gray-300">
+                        Impact
+                      </th>
+                      <th className="px-3 py-2 text-left font-medium text-gray-300">
+                        Status
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {result.tests.map((t) => (
+                      <tr key={t.id} className="border-t border-gray-800">
+                        <td className="px-3 py-2 text-gray-100">{t.name}</td>
+                        <td className="px-3 py-2 text-gray-400">
+                          {t.dimension}
+                        </td>
+                        <td className="px-3 py-2">
+                          <span
+                            className={
+                              t.impact === "high"
+                                ? "text-red-400"
+                                : t.impact === "medium"
+                                ? "text-yellow-300"
+                                : "text-green-300"
+                            }
+                          >
+                            {t.impact.toUpperCase()}
+                          </span>
+                        </td>
+                        <td className="px-3 py-2">
+                          <span
+                            className={
+                              t.status === "pass"
+                                ? "text-green-400"
+                                : t.status === "fail"
+                                ? "text-red-400"
+                                : "text-gray-400"
+                            }
+                          >
+                            {t.status.toUpperCase()}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
         </>
       )}
     </main>
   );
 }
+
 
