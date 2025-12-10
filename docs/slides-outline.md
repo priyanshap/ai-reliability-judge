@@ -51,3 +51,19 @@
 - Evaluator maps each test to a reliability dimension and partial score.
 - Failed tests produce suggestions that are turned into PR changes (config tweaks, logging hooks, safer defaults).
 - Tiny diagram: "Repo → Evaluator → Score + Tests → Fix generator → GitHub PR".
+
+### Slide 8 layout (deep-dive)
+Title: How the judge works
+
+Left bullets:
+- Each test targets a real failure mode (timeouts, retries, logging gaps, unsafe defaults).
+- Evaluator maps tests → reliability dimensions → partial scores.
+- Failed tests emit suggestions for safer configs or code.
+- A small generator turns suggestions into a GitHub PR.
+
+Right mini-diagram (simple boxes):
+- Box 1: "Agent repo (GitHub)"
+- Arrow to Box 2: "Evaluator (reliability tests)"
+- Arrow to Box 3: "Score + breakdown"
+- Arrow to Box 4: "Fix generator"
+- Arrow to GitHub logo: "Auto-fix PR"
