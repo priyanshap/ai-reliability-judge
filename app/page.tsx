@@ -54,9 +54,7 @@ type RunHistoryItem = {
 };
 
 export default function Home() {
-  const [repoUrl, setRepoUrl] = useState(
-    "https://github.com/langchain-ai/langgraph-example"
-  );
+  const [repoUrl, setRepoUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [status, setStatus] = useState<string | null>(null);
