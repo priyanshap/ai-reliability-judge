@@ -56,6 +56,15 @@ See `docs/reliability.md` for the detailed description of the five reliability d
 - Evaluator: orchestrates mock reliability tests and returns structured test results.
 - GitHub integration: uses the GitHub API to create branches, commit changes, and open pull requests.
 
+## Sponsor tools we used
+- **Cline CLI** – Used as our local AI coding agent in the terminal to scaffold the initial Next.js pages, API routes, and TypeScript types for the evaluator and run log. Cline CLI helped us move faster on boilerplate and keep a clean, consistent file structure. 
+
+- **Oumi** – Used to run and iterate on the open-source model setup behind our reliability evaluator, so we could quickly adjust prompts and scoring behaviour while staying on an OSS stack. 
+
+- **Vercel** – Used to deploy the AI Reliability Judge production app, giving judges a fast, globally available demo with simple CI-style redeploys. Vercel is the hosting backbone for our golden-path demo. 
+
+- **CodeRabbit** – Used as our GitHub-integrated code review assistant to automatically review PRs and highlight potential issues in our evaluator and API routes, helping us harden reliability logic and keep PRs clean. 
+
 ## Hackathon notes
 This project was built for an AI agents hackathon to showcase:
 

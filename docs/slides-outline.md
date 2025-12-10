@@ -67,3 +67,12 @@ Right mini-diagram (simple boxes):
 - Arrow to Box 3: "Score + breakdown"
 - Arrow to Box 4: "Fix generator"
 - Arrow to GitHub logo: "Auto-fix PR"
+
+## 9. Sponsor tools slide
+Title: How sponsor tools helped
+
+- Cline CLI: AI coding agent in the IDE to scaffold pages, API routes, and types.
+- Oumi: Sandbox for designing and tuning the reliability-scoring prompt.
+- CodeRabbit: Automated PR reviews to harden evaluator and API code.
+- Vercel: Production hosting for the live demo (same URL judges use).
+

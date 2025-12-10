@@ -39,7 +39,12 @@ This makes it easy to compare different versions or different repos, and to prov
 
 [On screen: hover over history items, show score and PR arrows.]
 
-## 6. Close (15–20 sec)
+## 6. Sponsor tooling (15–20 sec)
+“Quick note on how we built this with the hackathon sponsors:
+
+We used Cline CLI as an AI coding agent inside the IDE to scaffold these Next.js pages and API routes. Oumi was our playground to tune the reliability-scoring prompt before hard-coding it in the evaluator. CodeRabbit reviewed our pull requests so the `/api/run` and GitHub integration stayed robust. And everything you’re seeing runs on a Vercel deployment that judges can open directly.”
+
+## 7. Close (15–20 sec)
 “So that’s AI Reliability Judge in action: paste a repo, run the judge, read the score and breakdown, and open a ready-made PR to harden your agent.
 
 It turns AI agent reliability from a guess into something you can measure, compare, and ship with confidence.”

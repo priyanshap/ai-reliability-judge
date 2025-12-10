@@ -59,12 +59,18 @@ The golden-path demo uses the official LangGraph example repo, a real AI agent p
 - A working GitHub integration that creates meaningful PRs instead of placeholders.
 - A run history view that makes the tool feel like a real diagnostic surface, not just a static demo.
 
-## 8. What did you learn?
+### 8. How did you use the sponsor tools?
+- **Cline CLI:** Scaffolding and refactoring of our Next.js app and API routes with an AI coding agent in the terminal.
+- **Oumi:** Experimentation with open-source models and prompts used in our reliability evaluation pipeline.
+- **Vercel:** Production deployment target for the app that judges will use during evaluation.
+- **CodeRabbit:** Automated GitHub code reviews on our repo, especially for evaluator logic and API error-handling PRs.
+
+## 9. What did you learn?
 - How to translate abstract reliability principles (robustness, safety, observability, recovery) into concrete, testable checks for AI agents. 
 - How to present technical evaluation results in a way that non-specialist judges can scan quickly during a short demo window. 
 - How much value teams get from an auto-fix PR rather than just a red “fail” signal.
 
-## 9. What’s next for your project
+## 10. What’s next for your project
 - Add more reliability dimensions such as latency SLOs, load tests, guardrail checks, and red-team style prompts.
 - Support private repos via a GitHub App and team-specific configuration.
 - Export scores to CI checks and dashboards so agents cannot be deployed below a chosen reliability threshold.
