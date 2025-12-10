@@ -1,4 +1,4 @@
-# Devpost / submission answers
+# FAQs
 
 ## 1. What does your project do?
 AI Reliability Judge is a web app that evaluates the reliability of AI agent repos on GitHub.
