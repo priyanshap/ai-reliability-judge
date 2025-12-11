@@ -46,7 +46,7 @@ It shows the full loop: paste repo → run judge → score + breakdown → auto�
 
 ## Prerequisites
 - Node.js and npm installed. 
-- A GitHub personal access token with `repo` scope so the app can create branches and pull requests. [web:201]
+- A GitHub personal access token with `repo` scope so the app can create branches and pull requests. 
 
 ---
 
