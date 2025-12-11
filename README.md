@@ -4,7 +4,7 @@ AI Reliability Judge is a reliability and auto‑fix layer for AI agents: paste 
 ![AI Reliability Judge](public/readme-assets/mainui.png)
 
 ## Live links
-- **Note: paste the url: https://github.com/priyanshap/ai-reliability-judge for the demo.**
+- **Note:** paste the url https://github.com/priyanshap/ai-reliability-judge for the demo.
 - 🔗 **Demo:** https://ai-reliability-judge.vercel.app/ 
 - 🎬 **Video:** _Link to demo video_
 
