@@ -160,8 +160,8 @@ This architecture also includes the use of the above mentioned tools.
 ---
 
 ## Hackathon highlights
-- **Potential impact** – Turns agent reliability from a vague claim into a measurable 0–100 score plus an actionable checklist.  
-- **Creativity & originality** – Combines evaluation, scoring, and auto‑generated GitHub PRs so agents are not just judged but also nudged toward fixes. 
-- **Technical implementation** – Clean end‑to‑end flow from repo URL → evaluation → score + breakdown → auto‑PR, all configured via environment variables.  
-- **Aesthetics & UX** – Single‑screen flow with clear copy, inline URL validation, and a Recent runs panel that makes live judging easy.  
-- **Learning & growth** – Encodes reliability best practices for AI agents in a way that can be extended with richer tests and persistent storage after the hackathon. 
+- **Potential impact** – Turns agent reliability into a measurable 0–100 score plus a clear checklist.  
+- **Creativity & originality** – Combines evaluation, scoring, and auto‑generated GitHub PRs into one flow.  
+- **Technical implementation** – Clean repo URL → evaluation → score + breakdown → auto‑PR pipeline.  
+- **Aesthetics & UX** – Single‑screen flow with clear copy, URL validation, and a Recent runs panel.  
+- **Learning & growth** – Encodes reliability best practices into an extensible evaluator you can keep evolving.
