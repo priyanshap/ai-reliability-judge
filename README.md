@@ -4,7 +4,7 @@ AI Reliability Judge is a reliability and auto‑fix layer for AI agents: paste 
 ![AI Reliability Judge](public/readme-assets/mainui.png)
 
 ## Live links
-- 🔗 **Demo:** https://ai-reliability-judge.vercel.app/  
+- 🔗 **Demo:** https://ai-reliability-judge.vercel.app/ , use https://github.com/priyanshap/ai-reliability-judge for the demo
 - 🎬 **Video:** _Link to demo video_
 
 ## Why this matters
@@ -52,26 +52,26 @@ It shows the full loop: paste repo → run judge → score + breakdown → auto�
 
 ## Getting started
 1. **Clone and install**
-git clone https://github.com/priyanshap/ai-reliability-judge.git
-cd ai-reliability-judge
-npm install
+- git clone https://github.com/priyanshap/ai-reliability-judge.git
+- cd ai-reliability-judge
+- npm install
 
 2. **Configure environment variables**
 Create a `.env.local` file in the project root:
 
-GitHub personal access token with "repo" scope
-GITHUB_TOKEN=ghp_your_personal_access_token_here
+- GitHub personal access token with "repo" scope
+- GITHUB_TOKEN=ghp_your_personal_access_token_here
 
 Target repository where PRs will be opened
-GITHUB_OWNER=your-github-username
-GITHUB_REPO=your-github-repo
+- GITHUB_OWNER=your-github-username
+- GITHUB_REPO=your-github-repo
 
 - `GITHUB_OWNER` and `GITHUB_REPO` control **where PRs are opened**, regardless of which repo URL you paste into the UI.  
 - Keep real tokens only in `.env.local` and Vercel env settings; never commit them. 
 
 3. **Run the app**
-npm run dev
-Open `http://localhost:3000` in your browser.
+- npm run dev
+- Open `http://localhost:3000` in your browser.
 
 ---
 
