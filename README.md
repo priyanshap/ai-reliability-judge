@@ -9,8 +9,7 @@ AI Reliability Judge is a reliability and auto‑fix layer for AI agents: paste 
 - 🎬 **Video:** _Link to demo video_
 
 ## Why this matters
-Modern AI agents can look perfect in a notebook but silently fail in production, breaking workflows and eroding trust. [web:211]  
-AI Reliability Judge turns “it usually works” into a concrete, repeatable **reliability score** that founders, PMs, and engineers can show to stakeholders.
+Modern AI agents can look perfect in a notebook but silently fail in production, breaking workflows and eroding trust.
 
 ![Gap and Need](public/readme-assets/gap.png)
 
@@ -163,5 +162,5 @@ This architecture also includes the use of the above mentioned tools.
 - **Potential impact** – Turns agent reliability into a measurable 0–100 score plus a clear checklist.  
 - **Creativity & originality** – Combines evaluation, scoring, and auto‑generated GitHub PRs into one flow.  
 - **Technical implementation** – Clean repo URL → evaluation → score + breakdown → auto‑PR pipeline.  
-- **Aesthetics & UX** – Single‑screen flow with clear copy, URL validation, and a Recent runs panel.  
+- **Aesthetics & user experience** – Single‑screen flow with clear copy, URL validation, and a Recent runs panel.  
 - **Learning & growth** – Encodes reliability best practices into an extensible evaluator you can keep evolving.
