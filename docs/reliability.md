@@ -1,5 +1,5 @@
 # AI Agent Reliability Dimensions
-Our AI Reliability Judge scores agents across five dimensions inspired by industry reliability frameworks. [web:429][web:436][web:445]
+Our AI Reliability Judge scores agents across five dimensions inspired by industry reliability frameworks. [
 
 1. Task robustness
    - How consistently the agent completes its intended tasks without getting stuck, looping, or crashing.

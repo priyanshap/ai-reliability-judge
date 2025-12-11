@@ -1,8 +1,7 @@
 # One-liner
-AI Reliability Judge is a reliability and auto-fix layer for AI agents: paste a repo, stress-test the agent, get a 0–100 trust score, and receive an AI-generated GitHub PR with fixes. [web:431][web:437]
-
+AI Reliability Judge is a reliability and auto-fix layer for AI agents: paste a repo, stress-test the agent, get a 0–100 trust score, and receive an AI-generated GitHub PR with fixes. 
 # Problem
-Teams ship AI agents into production without a clear sense of reliability. Bugs only surface as incidents, and there is no standard way to measure trustworthiness across repos and versions. [web:445]
+Teams ship AI agents into production without a clear sense of reliability. Bugs only surface as incidents, and there is no standard way to measure trustworthiness across repos and versions. 
 
 # Solution
 Our tool runs scenario-based evaluations against any public AI agent repo, scores reliability across five dimensions, and auto-opens a GitHub PR with suggested changes (tests, guardrails, logging, config). This turns “agent reliability” from a vague feeling into a concrete CI-ready signal.
