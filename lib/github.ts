@@ -15,6 +15,11 @@ if (!owner || !repo || !process.env.GITHUB_TOKEN) {
   );
 }
 
+// Treat auth / permission / rate-limit issues as soft errors
+function isSoftGitHubError(status?: number) {
+  return status === 401 || status === 403 || status === 429;
+}
+
 export async function createFixPr(repoUrl: string) {
   console.log("[GitHub] Creating fix PR", { owner, repo, repoUrl });
 
@@ -58,6 +63,10 @@ export async function createFixPr(repoUrl: string) {
       error?.message,
       error?.response?.data
     );
+    if (isSoftGitHubError(error?.status)) {
+      // Skip PR creation; caller will continue without prUrl
+      return null;
+    }
     throw error;
   }
 
@@ -86,35 +95,48 @@ export async function createFixPr(repoUrl: string) {
     console.log("[GitHub] Creating new file on branch", branchName);
   }
 
-  await octokit.request("PUT /repos/{owner}/{repo}/contents/{path}", {
-    owner,
-    repo,
-    path: filePath,
-    message: "Add AI reliability fix note",
-    content,
-    branch: branchName,
-    sha: existingSha,
-  });
+  try {
+    await octokit.request("PUT /repos/{owner}/{repo}/contents/{path}", {
+      owner,
+      repo,
+      path: filePath,
+      message: "Add AI reliability fix note",
+      content,
+      branch: branchName,
+      sha: existingSha,
+    });
 
-  // 5. Create PR
-  const prBodyLines = [
-    `This PR was opened automatically as a demo fix for ${repoUrl}.`,
-    "",
-    "What this PR demonstrates:",
-    "- The AI Reliability Judge evaluated your agent repository.",
-    "- It created a branch and committed a small marker file.",
-    "- It opened this pull request so you can review and iterate.",
-  ];
+    // 5. Create PR
+    const prBodyLines = [
+      `This PR was opened automatically as a demo fix for ${repoUrl}.`,
+      "",
+      "What this PR demonstrates:",
+      "- The AI Reliability Judge evaluated your agent repository.",
+      "- It created a branch and committed a small marker file.",
+      "- It opened this pull request so you can review and iterate.",
+    ];
 
-  const pr = await octokit.request("POST /repos/{owner}/{repo}/pulls", {
-    owner,
-    repo,
-    title: "AI Reliability Judge – automated fix suggestion",
-    head: branchName,
-    base: baseBranch,
-    body: prBodyLines.join("\n"),
-  });
+    const pr = await octokit.request("POST /repos/{owner}/{repo}/pulls", {
+      owner,
+      repo,
+      title: "AI Reliability Judge – automated fix suggestion",
+      head: branchName,
+      base: baseBranch,
+      body: prBodyLines.join("\n"),
+    });
 
-  console.log("[GitHub] Created PR:", pr.data.html_url);
-  return pr.data.html_url;
+    console.log("[GitHub] Created PR:", pr.data.html_url);
+    return pr.data.html_url;
+  } catch (error: any) {
+    console.error(
+      "[GitHub] file or PR error:",
+      error?.status,
+      error?.message,
+      error?.response?.data
+    );
+    if (isSoftGitHubError(error?.status)) {
+      return null;
+    }
+    throw error;
+  }
 }

@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+const MIN_REPO_URL_LENGTH = 20;
+
 function isValidRepoUrl(url: string) {
   try {
     const u = new URL(url);
@@ -78,6 +80,15 @@ export default function Home() {
   }
 
   async function handleRun() {
+    if (!repoUrl || repoUrl.trim().length < MIN_REPO_URL_LENGTH) {
+      setError(
+        "Please paste a GitHub repo URL like https://github.com/owner/repo, not a short or invalid string."
+      );
+      setStatus(null);
+      setResult(null);
+      return;
+    }
+
     if (!isValidRepoUrl(repoUrl)) {
       setError(
         "Please paste a GitHub repo URL like https://github.com/owner/repo, not a profile, file, or PR link. Make sure it is a public repository."
@@ -150,7 +161,6 @@ export default function Home() {
               value={repoUrl}
               onChange={(e) => setRepoUrl(e.target.value)}
               placeholder="https://github.com/your-user/your-agent-repo"
-
               className="w-full border border-gray-700 bg-black rounded-md px-3 py-2 text-sm"
             />
             <p className="text-xs text-gray-400">
@@ -337,7 +347,8 @@ export default function Home() {
                 {run.status === "success" && (
                   <div className="mt-1 flex items-center justify-between">
                     <span className="text-[11px] text-yellow-300">
-                      Score: {run.score}
+                      Score:{" "}
+                      {typeof run.score === "number" ? run.score : "—"}
                     </span>
                     {run.prUrl && (
                       <a
