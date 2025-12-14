@@ -6,7 +6,7 @@ AI Reliability Judge is a reliability and auto‑fix layer for AI agents: paste 
 ## Live links
 - **Note:** paste the url https://github.com/priyanshap/ai-reliability-judge for the demo.
 - 🔗 **Demo:** https://ai-reliability-judge.vercel.app/ 
-- 🎬 **Video:** _Link to demo video_
+- 🎬 **Video:** https://www.youtube.com/watch?v=iCoz4mFXh_A
 
 ## Why this matters
 Modern AI agents can look perfect in a notebook but silently fail in production, breaking workflows and eroding trust.
