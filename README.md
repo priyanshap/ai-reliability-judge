@@ -92,6 +92,18 @@ If the repo does not look like an AI agent project, the app shows a warning so t
 
 ---
 
+## How scoring works (high level)
+
+The judge runs a suite of realistic tasks that mimic how users actually talk to your agent (multi‑step instructions, edge‑case prompts, and long‑running flows).
+
+For each task it tracks outcomes like successful completion, timeouts, crashes/exceptions, and clearly unsafe or off‑policy responses.
+
+These outcomes roll up into a **0–100 trust score**: agents that consistently complete tasks without breaking or going off‑policy score higher, while repeated failures, crashes, or unsafe outputs drag the score down.
+
+When issues are detected, the system prepares a focused GitHub pull request with configuration or code changes that are aimed at eliminating the specific failure modes observed in the run.
+
+---
+
 ## Reliability dimensions
 The evaluator currently checks:
 
@@ -119,7 +131,7 @@ See `docs/reliability.md` for a detailed description of each test.
 
 ---
 
-## Stack & tools we used
+## Sponsor technologies we used
 
 - **Cline CLI** – Local AI coding agent used to scaffold the initial Next.js pages, API routes, and TypeScript types so focus stayed on reliability logic instead of boilerplate. 
 ![Cline CLI Usage](public/readme-assets/cline.png)
